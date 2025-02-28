@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -100,7 +100,7 @@ class weProfiles {
 	private function checkCache() {
 		switch($this->_type) {
 			case "guild":
-				$reqFile = $this->_guildsCachePath . strtolower($this->_request) . '.cache';
+				$reqFile = $this->_guildsCachePath . trim(strtolower($this->_request)) . '.cache';
 				if(!file_exists($reqFile)) {
 					$this->cacheGuildData();
 				}
@@ -116,7 +116,7 @@ class weProfiles {
 				$this->_fileData = file_get_contents($reqFile);
 				break;
 			default:
-				$reqFile = $this->_playersCachePath . strtolower($this->_request) . '.cache';
+				$reqFile = $this->_playersCachePath . trim(strtolower($this->_request)) . '.cache';
 				if(!file_exists($reqFile)) {
 					$this->cachePlayerData();
 				}
@@ -135,17 +135,19 @@ class weProfiles {
 	
 	private function cacheGuildData() {
 		// General Data
-		$guildData = $this->dB->query_fetch_single("SELECT *, CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = ?", array($this->_request));
+		$guildData = DVT::getGuildInfoFromName($this->_request);
 		if(!$guildData) throw new Exception(lang('error_25',true));
 		
 		// Members
-		$guildMembers = $this->dB->query_fetch("SELECT * FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_NAME_." = ?", array($this->_request));
+		$guildMembers = DVT::getGuildMembersFromGuildId($guildData['guid']);
 		if(!$guildMembers) throw new Exception(lang('error_25',true));
 		$members = array();
 		foreach($guildMembers as $gmember) {
-			$members[] = $gmember[_CLMN_GUILDMEMB_CHAR_];
+			$members[] = $gmember[_CLMN_CHR_NAME_];
 		}
 		$gmembers_str = implode(",", $members);
+		
+		$guildMaster = DVT::getGuildMasterFromGuildId($guildData['guid']);
 		
 		// Cache
 		$data = array(
@@ -153,7 +155,7 @@ class weProfiles {
 			$guildData[_CLMN_GUILD_NAME_],
 			$guildData[_CLMN_GUILD_LOGO_],
 			$guildData[_CLMN_GUILD_SCORE_],
-			$guildData[_CLMN_GUILD_MASTER_],
+			$guildMaster,
 			$gmembers_str
 		);
 		
@@ -161,7 +163,7 @@ class weProfiles {
 		$cacheData = implode("|", $data);
 		
 		// Update Cache File
-		$reqFile = $this->_guildsCachePath . strtolower($this->_request) . '.cache';
+		$reqFile = $this->_guildsCachePath . trim(strtolower($this->_request)) . '.cache';
 		$fp = fopen($reqFile, 'w+');
 		fwrite($fp, $cacheData);
 		fclose($fp);
@@ -186,8 +188,10 @@ class weProfiles {
 		
 		// guild data
 		$guild = "";
-		$guildData = $this->dB->query_fetch_single("SELECT * FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_CHAR_." = ?", array($this->_request));
-		if($guildData) $guild = $guildData[_CLMN_GUILDMEMB_NAME_];
+		$guildName = DVT::getGuildNameFromCharacterId($playerData['guid']);
+		if($guildName != false) {
+			$guild = $guildName;
+		}
 		
 		// online status
 		$status = 0;
@@ -218,7 +222,7 @@ class weProfiles {
 		$cacheData = implode("|", $data);
 		
 		// Update Cache File
-		$reqFile = $this->_playersCachePath . strtolower($this->_request) . '.cache';
+		$reqFile = $this->_playersCachePath . trim(strtolower($this->_request)) . '.cache';
 		$fp = fopen($reqFile, 'w+');
 		fwrite($fp, $cacheData);
 		fclose($fp);

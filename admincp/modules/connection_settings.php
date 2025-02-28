@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -22,8 +22,6 @@ $allowedSettings = array(
 	'SQL_DB_PASS',
 	'SQL_DB_PORT',
 	'SQL_USE_2_DB',
-	'SQL_PDO_DRIVER',
-	'SQL_PASSWORD_ENCRYPTION',
 );
 
 if(isset($_POST['settings_submit'])) {
@@ -59,26 +57,15 @@ if(isset($_POST['settings_submit'])) {
 		if(!in_array($_POST['SQL_USE_2_DB'], array(0, 1))) throw new Exception('Invalid Use Two Database Structure setting.');
 		$setting['SQL_USE_2_DB'] = ($_POST['SQL_USE_2_DB'] == 1 ? true : false);
 		
-		# pdo dsn
-		if(!isset($_POST['SQL_PDO_DRIVER'])) throw new Exception('Invalid PDO Driver setting.');
-		if(!Validator::UnsignedNumber($_POST['SQL_PDO_DRIVER'])) throw new Exception('Invalid PDO Driver setting.');
-		if(!in_array($_POST['SQL_PDO_DRIVER'], array(1, 2, 3))) throw new Exception('Invalid PDO Driver setting.');
-		$setting['SQL_PDO_DRIVER'] = $_POST['SQL_PDO_DRIVER'];
-		
-		# md5
-		if(!isset($_POST['SQL_PASSWORD_ENCRYPTION'])) throw new Exception('Invalid password encryption setting.');
-		if(!in_array($_POST['SQL_PASSWORD_ENCRYPTION'], array('none', 'wzmd5', 'phpmd5', 'sha256'))) throw new Exception('Invalid password encryption setting.');
-		$setting['SQL_PASSWORD_ENCRYPTION'] = $_POST['SQL_PASSWORD_ENCRYPTION'];
-		
 		# test connection (1)
-		$testdB = new dB($setting['SQL_DB_HOST'], $setting['SQL_DB_PORT'], $setting['SQL_DB_NAME'], $setting['SQL_DB_USER'], $setting['SQL_DB_PASS'], $setting['SQL_PDO_DRIVER']);
+		$testdB = new dB($setting['SQL_DB_HOST'], $setting['SQL_DB_PORT'], $setting['SQL_DB_NAME'], $setting['SQL_DB_USER'], $setting['SQL_DB_PASS']);
 		if($testdB->dead) {
 			throw new Exception('The connection to database (1) was unsuccessful, settings not saved.');
 		}
 		
 		# test connection (2)
 		if($setting['SQL_USE_2_DB']) {
-			$testdB2 = new dB($setting['SQL_DB_HOST'], $setting['SQL_DB_PORT'], $setting['SQL_DB_2_NAME'], $setting['SQL_DB_USER'], $setting['SQL_DB_PASS'], $setting['SQL_PDO_DRIVER']);
+			$testdB2 = new dB($setting['SQL_DB_HOST'], $setting['SQL_DB_PORT'], $setting['SQL_DB_2_NAME'], $setting['SQL_DB_USER'], $setting['SQL_DB_PASS']);
 			if($testdB2->dead) {
 				throw new Exception('The connection to database (2) was unsuccessful, settings not saved.');
 			}
@@ -115,7 +102,7 @@ echo '<div class="col-md-12">';
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>Host</strong>';
-					echo '<p class="setting-description">Hostname/IP address of your MSSQL server.</p>';
+					echo '<p class="setting-description">Hostname/IP address of your MySQL server.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="SQL_DB_HOST" value="'.config('SQL_DB_HOST',true).'" required>';
@@ -165,7 +152,7 @@ echo '<div class="col-md-12">';
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>Port</strong>';
-					echo '<p class="setting-description">Port number to remotely connect to your MSSQL server. Usually 1433.</p>';
+					echo '<p class="setting-description">Port number to remotely connect to your MySQL server. Usually 3306.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="number" class="form-control" name="SQL_DB_PORT" value="'.config('SQL_DB_PORT',true).'" required>';
@@ -192,65 +179,6 @@ echo '<div class="col-md-12">';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
-					echo '<strong>PDO Driver</strong>';
-					echo '<p class="setting-description">Choose which driver WebEngine should use to remotely connect to your MSSQL server.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="1" '.(config('SQL_PDO_DRIVER',true) == 1 ? 'checked' : null).'>';
-							echo 'dblib (linux)';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="2" '.(config('SQL_PDO_DRIVER',true) == 2 ? 'checked' : null).'>';
-							echo 'sqlsrv';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="3" '.(config('SQL_PDO_DRIVER',true) == 3 ? 'checked' : null).'>';
-							echo 'odbc';
-						echo '</label>';
-					echo '</div>';
-				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
-					echo '<strong>Password Encryption</strong>';
-					echo '<p class="setting-description">Select the type of password encryption you are using for your account\'s table.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="none" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'none' ? 'checked' : null).'>';
-							echo 'None';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="wzmd5" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'wzmd5' ? 'checked' : null).'>';
-							echo 'MD5 (WZ)';
-						echo '</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="phpmd5" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'phpmd5' ? 'checked' : null).'>';
-							echo 'MD5 (PHP)';
-						echo '</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="sha256" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'sha256' ? 'checked' : null).'>';
-							echo 'Sha256';
-						echo '</label>';
-					echo '</div>';
-				echo '</td>';
-			echo '</tr>';
-			
 			
 		echo '</table>';
 		

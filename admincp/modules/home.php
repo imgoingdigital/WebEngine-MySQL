@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -49,21 +49,21 @@ echo '<div class="row">';
 				$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 				
 				// Total Accounts
-				$totalAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO");
+				$totalAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM "._TBL_MI_."");
 				echo '<div class="list-group-item">';
 					echo 'Registered Accounts';
 					echo '<span class="pull-right text-muted small">'.number_format($totalAccounts['result']).'</span>';
 				echo '</div>';
 				
 				// Banned Accounts
-				$bannedAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO WHERE bloc_code = 1");
+				$bannedAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM "._TBL_MI_." WHERE "._CLMN_BLOCCODE_." = 1");
 				echo '<div class="list-group-item">';
 					echo 'Banned Accounts';
 					echo '<span class="pull-right text-muted small">'.number_format($bannedAccounts['result']).'</span>';
 				echo '</div>';
 				
 				// Total Characters
-				$totalCharacters = $dB->query_fetch_single("SELECT COUNT(*) as result FROM Character");
+				$totalCharacters = $dB->query_fetch_single("SELECT COUNT(*) as result FROM "._TBL_CHR_."");
 				echo '<div class="list-group-item">';
 					echo 'Characters';
 					echo '<span class="pull-right text-muted small">'.number_format($totalCharacters['result']).'</span>';

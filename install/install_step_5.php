@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -20,7 +20,6 @@ if(isset($_POST['install_step_5_submit'])) {
 	try {
 		# check for empty values
 		if(!isset($_POST['install_step_5_1'])) throw new Exception('You must complete all required fields.');
-		if(!isset($_POST['install_step_5_7'])) throw new Exception('You must complete all required fields.');
 		
 		# check admin user
 		if(!Validator::AlphaNumeric($_POST['install_step_5_1'])) throw new Exception('The admin account username can only contain alpha-numeric characters.');
@@ -30,14 +29,10 @@ if(isset($_POST['install_step_5_submit'])) {
 		if(!isset($_SESSION['install_sql_db1'])) throw new Exception('Database connection info missing, restart installation process.');
 		if(!isset($_SESSION['install_sql_user'])) throw new Exception('Database connection info missing, restart installation process.');
 		if(!isset($_SESSION['install_sql_pass'])) throw new Exception('Database connection info missing, restart installation process.');
-		if(!isset($_SESSION['install_sql_dsn'])) throw new Exception('Database connection info missing, restart installation process.');
-		
-		# check for valid server files
-		if(!array_key_exists($_POST['install_step_5_7'], $webengine['file_compatibility'])) throw new Exception('The selected server files are not compatible with WebEngine CMS.');
 		
 		// Set Configs
 		$webengineDefaultConfig['admins'] = array($_POST['install_step_5_1'] => 100);
-		$webengineDefaultConfig['server_files'] = strtolower($_POST['install_step_5_7']);
+		$webengineDefaultConfig['server_files'] = 'dvteam';
 		$webengineDefaultConfig['SQL_DB_HOST'] = $_SESSION['install_sql_host'];
 		$webengineDefaultConfig['SQL_DB_NAME'] = $_SESSION['install_sql_db1'];
 		$webengineDefaultConfig['SQL_DB_2_NAME'] = $_SESSION['install_sql_db2'];
@@ -45,9 +40,6 @@ if(isset($_POST['install_step_5_submit'])) {
 		$webengineDefaultConfig['SQL_DB_PASS'] = $_SESSION['install_sql_pass'];
 		$webengineDefaultConfig['SQL_DB_PORT'] = $_SESSION['install_sql_port'];
 		$webengineDefaultConfig['SQL_USE_2_DB'] = isset($_SESSION['install_sql_db2']) ? true : false;
-		$webengineDefaultConfig['SQL_PDO_DRIVER'] = $_SESSION['install_sql_dsn'];
-		$webengineDefaultConfig['SQL_PASSWORD_ENCRYPTION'] = $_SESSION['install_sql_passwd_encrypt'];
-		$webengineDefaultConfig['SQL_SHA256_SALT'] = $_SESSION['install_sql_sha256_salt'];
 		$webengineDefaultConfig['webengine_cms_installed'] = true;
 		
 		# encode settings
@@ -81,19 +73,6 @@ if(isset($_POST['install_step_5_submit'])) {
 		<div class="col-sm-9">
 			<input type="text" name="install_step_5_1" class="form-control" id="input_1" required>
 			<p class="help-block">Type the username of the account that will have full admincp access.</p>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">Server Files</label>
-		<div class="col-sm-9">
-			<?php foreach($webengine['file_compatibility'] as $serverFileValue => $serverFileInfo) { ?>
-				<div class="radio">
-					<label>
-						<input type="radio" name="install_step_5_7" name="optionsRadios" value="<?php echo $serverFileValue; ?>">
-						<?php echo $serverFileInfo['name']; ?>
-					</label>
-				</div>
-			<?php } ?>
 		</div>
 	</div>
 	

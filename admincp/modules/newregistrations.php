@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@
 echo '<h1 class="page-header">New Registrations</h1>';
 
 	$db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
-	$newRegs = $db->query_fetch("SELECT TOP 200 "._CLMN_MEMBID_.", "._CLMN_USERNM_.", "._CLMN_EMAIL_." FROM "._TBL_MI_." ORDER BY "._CLMN_MEMBID_." DESC");
+	$newRegs = $db->query_fetch("SELECT "._CLMN_MEMBID_.", "._CLMN_USERNM_.", "._CLMN_EMAIL_." FROM "._TBL_MI_." ORDER BY "._CLMN_MEMBID_." DESC LIMIT 200");
 	
 	if(is_array($newRegs)) {
 		echo '<table id="new_registrations" class="table display">';

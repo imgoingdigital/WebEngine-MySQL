@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -22,20 +22,10 @@ class dB {
 	protected $db;
 	
 	// what are you doing around here?
-	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD, $SQLDRIVER) {
+	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD) {
 		try {
 			
-			if($SQLDRIVER == 3) {
-				$this->db = new PDO("odbc:Driver={SQL Server};Server=".$SQLHOST.";Database=".$SQLDB."; Uid=".$SQLUSER.";Pwd=".$SQLPWD.";");
-			} else {
-				if($SQLDRIVER == 2) {
-					$pdo_connect = "sqlsrv:Server=".$SQLHOST.",".$SQLPORT.";Database=".$SQLDB."";
-				} else {
-					$pdo_connect = 'dblib:host='.$SQLHOST.':'.$SQLPORT.';dbname='.$SQLDB;
-				}
-				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD);
-			}
-
+			$this->db = new PDO('mysql:host='.$SQLHOST.';port='.$SQLPORT.';dbname='.$SQLDB, $SQLUSER, $SQLPWD);
 			
 		} catch (PDOException $e) {
 			$this->dead = true;

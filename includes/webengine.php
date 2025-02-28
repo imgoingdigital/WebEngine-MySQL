@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -109,6 +109,7 @@ if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Excepti
 if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
 if(!@include_once(__PATH_CLASSES__ . 'class.cache.php')) throw new Exception('Could not load class (cache).');
 if(!@include_once(__PATH_CLASSES__ . 'paypal/PaypalIPN.php')) throw new Exception('Could not load class (PayalIPN).');
+if(!@include_once(__PATH_CLASSES__ . 'class.dvteam.php')) throw new Exception('Could not load class (dvteam).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');
@@ -144,7 +145,6 @@ if($checkConfigs) {
 	if(!check_value($config['SQL_DB_PASS'])) throw new Exception('The database password configuration is required to connect to your database.');
 	if(!check_value($config['SQL_DB_PORT'])) throw new Exception('The database port configuration is required to connect to your database.');
 	if($config['SQL_USE_2_DB']) if(!check_value($config['SQL_DB_2_NAME'])) throw new Exception('The additional database name configuration is required to connect to your database.');
-	if(!check_value($config['SQL_PDO_DRIVER'])) throw new Exception('The PDO driver configuration is required to connect to your database.');
 }
 
 # Load Table Definitions

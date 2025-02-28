@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -28,17 +28,17 @@ if(isset($_POST['ip_address'])) {
 		echo '<div class="row">';
 			echo '<div class="col-md-6">';
 				echo '<div class="panel panel-primary">';
-				echo '<div class="panel-heading">MEMB_STAT</div>';
+				echo '<div class="panel-heading">Results</div>';
 				echo '<div class="panel-body">';
 					
 					$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
-					$membStatData = $searchdb->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_MS_IP_." = ? GROUP BY "._CLMN_MS_MEMBID_."", array($_POST['ip_address']));
+					$membStatData = $searchdb->query_fetch("SELECT `t1`.`"._CLMN_MS_MEMBID_."`, `t2`.`"._CLMN_USERNM_."` FROM `"._TBL_MS_."` AS t1 INNER JOIN `"._TBL_MI_."` AS t2 ON `t1`.`"._CLMN_MS_MEMBID_."` = `t2`.`"._CLMN_MEMBID_."` WHERE `t1`.`"._CLMN_MS_IP_."` = ? GROUP BY `t1`.`"._CLMN_MS_MEMBID_."`", array($_POST['ip_address']));
 					if(is_array($membStatData)) {
 						echo '<table class="table table-no-border table-hover">';
 							foreach($membStatData as $membStatUser) {
 								echo '<tr>';
-									echo '<td>'.$membStatUser[_CLMN_MS_MEMBID_].'</td>';
-									echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($membStatUser[_CLMN_MS_MEMBID_])).'" class="btn btn-xs btn-default">Account Information</a></td>';
+									echo '<td>'.$membStatUser[_CLMN_USERNM_].'</td>';
+									echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$membStatUser[_CLMN_MS_MEMBID_]).'" class="btn btn-xs btn-default">Account Information</a></td>';
 								echo '</tr>';
 							}
 							echo '</table>';

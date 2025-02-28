@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -25,7 +25,7 @@
 	if(isset($_POST['search_request'])) {
 		try {
 			$searchRequest = '%'.$_POST['search_request'].'%';
-			$search = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE account_id LIKE ?", array($searchRequest));
+			$search = $database->query_fetch("SELECT * FROM ".WEBENGINE_BAN_LOG." WHERE account_id LIKE ? LIMIT 25", array($searchRequest));
 			if(is_array($search)) {
 				echo '<div class="row">';
 				echo '<div class="col-md-12">';

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -220,32 +220,6 @@ if(isset($_GET['id'])) {
 				
 				if($accountInfoConfig['showIpInfo']) {
 					
-					if(defined('_TBL_LOGEX_')) {
-						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
-						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
-						echo '<div class="panel panel-default">';
-						echo '<div class="panel-heading">Account\'s IP Address (MuEngine)</div>';
-						echo '<div class="panel-body">';
-							if($checkMuLogEx) {
-								$accountIpAddress = $common->retrieveAccountIPs($accountInfo[_CLMN_USERNM_]);
-								if(is_array($accountIpAddress)) {
-									echo '<table class="table table-no-border table-hover">';
-										foreach($accountIpAddress as $accountIp) {
-											echo '<tr>';
-												echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_LOGEX_IP_]).'" target="_blank">'.$accountIp[_CLMN_LOGEX_IP_].'</a></td>';
-											echo '</tr>';
-										}
-									echo '</table>';
-								} else {
-									message('warning', 'No IP address found.');
-								}
-							} else {
-								message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.');
-							}
-						echo '</div>';
-						echo '</div>';
-					}
-					
 					if(defined('_TBL_CH_')) {
 						$accountDB = config('SQL_USE_2_DB', true) == true ? $dB2 : $dB;
 						
@@ -270,35 +244,6 @@ if(isset($_GET['id'])) {
 						echo '</div>';
 						echo '</div>';
 						
-						// ACCOUNT CONNECTION HISTORY
-						echo '<div class="panel panel-default">';
-						echo '<div class="panel-heading">Account Connection History (last 25)</div>';
-						echo '<div class="panel-body">';
-							
-							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? AND "._CLMN_CH_STATE_." = ? ORDER BY "._CLMN_CH_ID_." DESC", array($accountInfo[_CLMN_USERNM_], 'Connect'));
-							if(is_array($accountConHistory)) {
-								echo '<table class="table table-no-border table-hover">';
-									echo '<tr>';
-										echo '<th>Date</th>';
-										echo '<th class="hidden-xs">Server</th>';
-										echo '<th>IP</th>';
-										echo '<th>HWID</th>';
-									echo '</tr>';
-									foreach($accountConHistory as $connection) {
-										echo '<tr>';
-											echo '<td>'.$connection[_CLMN_CH_DATE_].'</td>';
-											echo '<td class="hidden-xs">'.$connection[_CLMN_CH_SRVNM_].'</td>';
-											echo '<td>'.$connection[_CLMN_CH_IP_].'</td>';
-											echo '<td>'.$connection[_CLMN_CH_HWID_].'</td>';
-										echo '</tr>';
-									}
-								echo '</table>';
-							} else {
-								message('warning', 'No connection history found for account.');
-							}
-							
-						echo '</div>';
-						echo '</div>';
 					}
 					
 				}

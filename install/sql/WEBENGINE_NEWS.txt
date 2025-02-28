@@ -1,8 +1,9 @@
-CREATE TABLE [dbo].[{TABLE_NAME}](
-	[news_id] [int] IDENTITY(1,1) NOT NULL,
-	[news_title] [varchar](max) NOT NULL,
-	[news_author] [varchar](50) NOT NULL,
-	[news_date] [varchar](50) NOT NULL,
-	[news_content] [text] NOT NULL,
-	[allow_comments] [int] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+CREATE TABLE `{TABLE_NAME}`  (
+  `news_id` int(11) NOT NULL AUTO_INCREMENT,
+  `news_title` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `news_author` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `news_date` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `news_content` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `allow_comments` int(11) NOT NULL,
+  PRIMARY KEY (`news_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;

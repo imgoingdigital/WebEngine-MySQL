@@ -16,12 +16,9 @@
     "SQL_DB_2_NAME": "Me_MuOnline",
     "SQL_DB_USER": "sa",
     "SQL_DB_PASS": "",
-    "SQL_DB_PORT": "1433",
+    "SQL_DB_PORT": "3306",
     "SQL_USE_2_DB": false,
-    "SQL_PDO_DRIVER": "1",
-    "SQL_PASSWORD_ENCRYPTION": "none",
-	"SQL_SHA256_SALT": "1234567890",
-    "server_files": "igcn",
+    "server_files": "dvteam",
     "language_switch_active": true,
     "language_default": "en",
     "language_debug": false,
@@ -44,6 +41,5 @@
     "server_info_exp": "500x",
     "server_info_masterexp": "250x",
     "server_info_drop": "50%",
-    "maximum_online": "500",
-    "season_1_support": false
+    "maximum_online": "500"
 }

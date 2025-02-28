@@ -1,10 +1,7 @@
-CREATE TABLE [dbo].[{TABLE_NAME}](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[block_ip] [varchar](50) NOT NULL,
-	[block_by] [varchar](25) NOT NULL,
-	[block_date] [varchar](50) NOT NULL,
- CONSTRAINT [PK_{TABLE_NAME}] PRIMARY KEY CLUSTERED 
-(
-	[block_ip] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+CREATE TABLE `{TABLE_NAME}`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `block_ip` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `block_by` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `block_date` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;

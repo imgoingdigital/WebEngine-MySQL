@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,7 +13,6 @@
 
 if(isset($_GET['name'])) {
 	try {
-		if(!Validator::AlphaNumeric($_GET['name'])) throw new Exception("Invalid character name.");
 		$Character = new Character();
 		if(!$Character->CharacterExists($_GET['name'])) throw new Exception("Character does not exist.");
 		
@@ -112,6 +111,10 @@ if(isset($_GET['name'])) {
 		$charData = $Character->CharacterData($_GET['name']);
 		if(!$charData) throw new Exception("Could not retrieve character information (invalid character).");
 		
+		$Account = new Account();
+		$accountData = $Account->accountInformation($charData[_CLMN_CHR_ACCID_]);
+		if(!is_array($accountData)) throw new Exception('Could not retrieve account information.');
+		
 		echo '<h1 class="page-header">Edit Character: <small>'.$charData[_CLMN_CHR_NAME_].'</small></h1>';
 		
 		echo '<form role="form" method="post">';
@@ -128,7 +131,7 @@ if(isset($_GET['name'])) {
 					echo '<table class="table table-no-border table-hover">';
 						echo '<tr>';
 							echo '<th>Account:</th>';
-							echo '<td><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($charData[_CLMN_CHR_ACCID_])).'">'.$charData[_CLMN_CHR_ACCID_].'</a></td>';
+							echo '<td><a href="'.admincp_base("accountinfo&id=".$charData[_CLMN_CHR_ACCID_]).'">'.$accountData[_CLMN_USERNM_].'</a></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Class:</th>';

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -49,7 +49,7 @@ echo '<div class="row">';
 			echo '<tbody>';
 			foreach($onlineAccounts as $row) {
 				echo '<tr>';
-					echo '<td><a href="'.admincp_base('accountinfo&u='.$row[_CLMN_MS_MEMBID_]).'" target="_blank">'.$row[_CLMN_MS_MEMBID_].'</a></td>';
+					echo '<td><a href="'.admincp_base('accountinfo&id='.$row[_CLMN_MS_MEMBID_]).'" target="_blank">'.$row[_CLMN_MS_MEMBID_].'</a></td>';
 					echo '<td>'.$row[_CLMN_MS_IP_].'</td>';
 					echo '<td>'.$row[_CLMN_MS_GS_].'</td>';
 				echo '</tr>';

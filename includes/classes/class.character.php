@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -96,7 +96,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_32'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_32'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_32'));
 		
 		// check online status
 		$Account = new Account();
@@ -186,7 +186,7 @@ class Character {
 		$data['name'] = $characterData[_CLMN_CHR_NAME_];
 		
 		// query
-		$query = "UPDATE Character SET ";
+		$query = "UPDATE "._TBL_CHR_." SET ";
 		$query .= _CLMN_CHR_LVL_ . " = 1, ";
 		if($revertClass) $query .= _CLMN_CHR_CLASS_ . " = :class, ";
 		if($revertClass) $query .= _CLMN_CHR_QUEST_ . " = NULL, ";
@@ -241,7 +241,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_35'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_35'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_35'));
 		
 		// check online status
 		$Account = new Account();
@@ -325,7 +325,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_36'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_36'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_36'));
 		
 		// check online status
 		$Account = new Account();
@@ -393,7 +393,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_37'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_37'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_37'));
 		
 		// check online status
 		$Account = new Account();
@@ -456,7 +456,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_38'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_38'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_38'));
 		
 		// check online status
 		$Account = new Account();
@@ -563,7 +563,7 @@ class Character {
 		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_64'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_64'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_64'));
 		
 		// points
 		$pointsTotal = $this->_strength+$this->_agility+$this->_vitality+$this->_energy+$this->_command;
@@ -679,7 +679,7 @@ class Character {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
 		
-		$result = $this->muonline->query_fetch("SELECT "._CLMN_CHR_NAME_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_ACCID_." = ?", array($username));
+		$result = $this->muonline->query_fetch("SELECT `t1`.`"._CLMN_CHR_NAME_."` FROM `"._TBL_CHR_."` AS t1 JOIN `"._TBL_MI_."` AS t2 ON `t2`.`"._CLMN_USERNM_."` = ? WHERE `t2`.`"._CLMN_MEMBID_."` = `t1`.`"._CLMN_MS_MEMBID_."`", array($username));
 		if(!is_array($result)) return;
 		
 		foreach($result as $row) {
@@ -699,14 +699,13 @@ class Character {
 		
 	}
 	
-	public function CharacterBelongsToAccount($character_name,$username) {
+	public function CharacterBelongsToAccount($character_name,$userid) {
 		if(!check_value($character_name)) return;
-		if(!check_value($username)) return;
-		if(!Validator::UsernameLength($username)) return;
-		if(!Validator::AlphaNumeric($username)) return;
+		if(!check_value($userid)) return;
+		if(!Validator::UnsignedNumber($userid)) return;
 		$characterData = $this->CharacterData($character_name);
 		if(!is_array($characterData)) return;
-		if(strtolower($characterData[_CLMN_CHR_ACCID_]) != strtolower($username)) return;
+		if(strtolower($characterData[_CLMN_CHR_ACCID_]) != strtolower($userid)) return;
 		return true;
 		
 	}
@@ -736,7 +735,7 @@ class Character {
 		if(!check_value($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$data = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." = ?", array($username));
+		$data = $this->muonline->query_fetch_single("SELECT `t1`.* FROM `"._TBL_AC_."` AS t1 JOIN `"._TBL_MI_."` AS t2 ON `t2`.`"._CLMN_USERNM_."` = ? WHERE `t2`.`"._CLMN_MEMBID_."` = `t1`."._CLMN_AC_ID_."`", array($username));
 		if(!is_array($data)) return;
 		return $data[_CLMN_GAMEIDC_];
 	}

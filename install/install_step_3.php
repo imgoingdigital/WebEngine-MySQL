@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -29,9 +29,11 @@ try {
 	}
 	
 	if(isset($_SESSION['install_sql_db2'])) {
-		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass']);
+		$dbName = $_SESSION['install_sql_db2'];
 	} else {
-		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass']);
+		$dbName = $_SESSION['install_sql_db1'];
 	}
 	
 	if($mudb->dead) {
@@ -63,7 +65,7 @@ try {
 		}
 		
 		// check if exists
-		$tableExists = $mudb->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array($sqlTableName));
+		$tableExists = $mudb->query_fetch_single("SELECT * FROM information_schema.tables WHERE table_schema = ? AND table_name = ? LIMIT 1", array($dbName, $sqlTableName));
 		
 		if(!$tableExists) {
 			$create = $mudb->query($query);

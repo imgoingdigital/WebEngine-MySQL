@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -26,7 +26,7 @@ $accountInfo = $common->accountInformation($_SESSION['userid']);
 if(!is_array($accountInfo)) throw new Exception(lang('error_12'));
 
 # account online status
-$onlineStatus = ($common->accountOnline($_SESSION['username']) ? '<span class="label label-success">'.lang('myaccount_txt_9').'</span>' : '<span class="label label-danger">'.lang('myaccount_txt_10').'</span>');
+$onlineStatus = (DVT::getOnlineStatusFromAccountId($_SESSION['userid']) ? '<span class="label label-success">'.lang('myaccount_txt_9').'</span>' : '<span class="label label-danger">'.lang('myaccount_txt_10').'</span>');
 
 # account status
 $accountStatus = ($accountInfo[_CLMN_BLOCCODE_] == 1 ? '<span class="label label-danger">'.lang('myaccount_txt_8').'</span>' : '<span class="label label-default">'.lang('myaccount_txt_7').'</span>');
@@ -131,29 +131,4 @@ if(is_array($AccountCharacters)) {
 	echo '</div>';
 } else {
 	message('warning', lang('error_46'));
-}
-
-// Connection History (IGCN)
-if(defined('_TBL_CH_')) {
-	echo '<div class="page-title"><span>'.lang('myaccount_txt_16').'</span></div>';
-	$me = Connection::Database('Me_MuOnline');
-	$connectionHistory = $me->query_fetch("SELECT TOP 10 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? ORDER BY "._CLMN_CH_ID_." DESC", array($_SESSION['username']));
-	if(is_array($connectionHistory)) {
-		echo '<table class="table table-condensed general-table-ui">';
-			echo '<tr>';
-				echo '<td>'.lang('myaccount_txt_13').'</td>';
-				echo '<td>'.lang('myaccount_txt_17').'</td>';
-				echo '<td>'.lang('myaccount_txt_18').'</td>';
-				echo '<td>'.lang('myaccount_txt_19').'</td>';
-			echo '</tr>';
-			foreach($connectionHistory as $row) {
-				echo '<tr>';
-					echo '<td>'.$row[_CLMN_CH_DATE_].'</td>';
-					echo '<td>'.$row[_CLMN_CH_SRVNM_].'</td>';
-					echo '<td>'.$row[_CLMN_CH_IP_].'</td>';
-					echo '<td>'.$row[_CLMN_CH_STATE_].'</td>';
-				echo '</tr>';
-			}
-		echo '</table>';
-	}
 }

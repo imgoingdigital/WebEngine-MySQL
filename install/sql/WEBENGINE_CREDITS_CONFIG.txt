@@ -1,15 +1,12 @@
-CREATE TABLE [dbo].[{TABLE_NAME}](
-	[config_id] [int] IDENTITY(1,1) NOT NULL,
-	[config_title] [varchar](50) NOT NULL,
-	[config_database] [varchar](50) NOT NULL,
-	[config_table] [varchar](50) NOT NULL,
-	[config_credits_col] [varchar](50) NOT NULL,
-	[config_user_col] [varchar](50) NOT NULL,
-	[config_user_col_id] [varchar](50) NOT NULL,
-	[config_checkonline] [tinyint] NOT NULL,
-	[config_display] [tinyint] NOT NULL,
- CONSTRAINT [PK_{TABLE_NAME}] PRIMARY KEY CLUSTERED 
-(
-	[config_id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+CREATE TABLE `{TABLE_NAME}`  (
+  `config_id` int(11) NOT NULL AUTO_INCREMENT,
+  `config_title` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_database` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_table` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_credits_col` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_user_col` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_user_col_id` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `config_checkonline` tinyint(3) UNSIGNED NOT NULL,
+  `config_display` tinyint(3) UNSIGNED NOT NULL,
+  PRIMARY KEY (`config_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;

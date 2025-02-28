@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -55,7 +55,7 @@
 			<div class="tab-content">
 				<div class="tab-pane fade active in" id="temp"><br />
 				<?php
-					$tBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("temporal"));
+					$tBans = $database->query_fetch("SELECT * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC LIMIT 25", array("temporal"));
 					if(is_array($tBans)) {
 						echo '<table class="table table-condensed">';
 							echo '<thead>';
@@ -88,7 +88,7 @@
 				</div>
 				<div class="tab-pane fade" id="perm"><br />
 				<?php
-					$pBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("permanent"));
+					$pBans = $database->query_fetch("SELECT * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC LIMIT 25", array("permanent"));
 					if(is_array($pBans)) {
 						echo '<table class="table table-condensed">';
 							echo '<thead>';

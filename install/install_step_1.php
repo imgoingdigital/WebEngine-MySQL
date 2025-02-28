@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -72,25 +72,11 @@ echo '<div class="list-group">';
 	echo '</div>';
 	
 	if($chk_5) {
-		$chk_6 = (extension_loaded('pdo_dblib') ? true : false);
+		$chk_6 = (extension_loaded('pdo_mysql') ? true : false);
 		$check_6 = ($chk_6 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 		echo '<div class="list-group-item">';
-			echo 'PDO dblib (linux)';
+			echo 'PDO MySQL';
 			echo '<span class="pull-right">'.$check_6.'</span>';
-		echo '</div>';
-
-		$chk_7 = (extension_loaded('pdo_odbc') ? true : false);
-		$check_7 = ($chk_7 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
-		echo '<div class="list-group-item">';
-			echo 'PDO odbc (linux/windows)';
-			echo '<span class="pull-right">'.$check_7.'</span>';
-		echo '</div>';
-
-		$chk_8 = (extension_loaded('pdo_sqlsrv') ? true : false);
-		$check_8 = ($chk_8 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
-		echo '<div class="list-group-item">';
-			echo 'PDO sqlsrv (windows)';
-			echo '<span class="pull-right">'.$check_8.'</span>';
 		echo '</div>';
 	}
 	

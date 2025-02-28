@@ -1,11 +1,12 @@
-CREATE TABLE [dbo].[{TABLE_NAME}](
-	[cron_id] [int] IDENTITY(1,1) NOT NULL,
-	[cron_name] [varchar](100) NOT NULL,
-	[cron_description] [varchar](max) NULL,
-	[cron_file_run] [varchar](max) NOT NULL,
-	[cron_run_time] [varchar](50) NOT NULL,
-	[cron_last_run] [varchar](50) NULL,
-	[cron_status] [int] NOT NULL,
-	[cron_protected] [int] NOT NULL,
-	[cron_file_md5] [varchar](50) NOT NULL
-) ON [PRIMARY]
+CREATE TABLE `{TABLE_NAME}`  (
+  `cron_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cron_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `cron_description` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `cron_file_run` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `cron_run_time` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `cron_last_run` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `cron_status` int(11) NOT NULL,
+  `cron_protected` int(11) NOT NULL,
+  `cron_file_md5` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`cron_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;

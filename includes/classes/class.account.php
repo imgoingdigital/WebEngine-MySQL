@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -67,37 +67,17 @@ class Account extends common {
 		# insert data
 		$data = array(
 			'username' => $username,
-			'password' => $password,
-			'name' => $username,
+			'password' => hash('sha256', $username.':'.$password),
 			'serial' => $this->_defaultAccountSerial,
 			'email' => $email
 		);
 		
 		# query
-		switch($this->_passwordEncryption) {
-			case 'wzmd5':
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
-				break;
-			case 'phpmd5':
-				$data['password'] = md5($password);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
-				break;
-			case 'sha256':
-				$data['password'] = '0x' . hash('sha256', $password . $username . $this->_sha256salt);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
-				break;
-			default:
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
-		}
+		$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.") VALUES (:username, :password, :serial, :email, 0)";
 		
 		# register account
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
-		
-		# old season support
-		if(config('season_1_support')) {
-			@$this->memuonline->query("INSERT INTO VI_CURR_INFO (ends_days, chek_code, used_time, memb___id, memb_name, memb_guid, sno__numb, Bill_Section, Bill_Value, Bill_Hour, Surplus_Point, Surplus_Minute, Increase_Days) VALUES ('2005', '1', '1234', ?, '', '1', '7', '6', '3', '6', '6', '2020-01-01 00:00:00', '0')", array($username));
-		}
 		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {
@@ -414,30 +394,15 @@ class Account extends common {
 		# insert data
 		$data = array(
 			'username' => $verifyKey['registration_account'],
-			'password' => $verifyKey['registration_password'],
-			'name' => $verifyKey['registration_account'],
+			'password' => hash('sha256', $verifyKey['registration_account'].':'.$verifyKey['registration_password']),
 			'serial' => $this->_defaultAccountSerial,
 			'email' => $verifyKey['registration_email']
 		);
 		
 		# query
-		switch($this->_passwordEncryption) {
-			case 'wzmd5':
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
-				break;
-			case 'phpmd5':
-				$data['password'] = md5($verifyKey['registration_password']);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
-				break;
-			case 'sha256':
-				$data['password'] = '0x' . hash('sha256', $verifyKey['registration_password'] . $verifyKey['registration_account'] . $this->_sha256salt);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
-				break;
-			default:
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
-		}
+		$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.") VALUES (:username, :password, :serial, :email, 0)";
 		
-		# create account
+		# register account
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
 		

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -34,28 +34,17 @@ if(isset($_POST['install_step_2_submit'])) {
 		$_SESSION['install_sql_db1'] = $_POST['install_step_2_4'];
 		if(!isset($_POST['install_step_2_4'])) throw new Exception('You must complete all required fields.');
 		
-		$_SESSION['install_sql_dsn'] = $_POST['install_step_2_8'];
-		if(!isset($_POST['install_step_2_8'])) throw new Exception('You must complete all required fields.');
-		if(!array_key_exists($_POST['install_step_2_8'], $install['PDO_DSN'])) throw new Exception('You must complete all required fields.');
-		
-		$_SESSION['install_sql_db2'] = (isset($_POST['install_step_2_5']) ? $_POST['install_step_2_5'] : null);
-		
-		$_SESSION['install_sql_passwd_encrypt'] = $_POST['install_step_2_6'];
-		if(!isset($_POST['install_step_2_6'])) throw new Exception('You must complete all required fields.');
-		if(!in_array(strtolower($_POST['install_step_2_6']), $install['PDO_PWD_ENCRYPT'])) throw new Exception('You must complete all required fields.');
-		
-		$_SESSION['install_sql_sha256_salt'] = $_POST['install_step_2_9'];
-		if(!isset($_POST['install_step_2_9'])) throw new Exception('You must complete all required fields.');
+		$_SESSION['install_sql_db2'] = ((isset($_POST['install_step_2_5']) && !empty($_POST['install_step_2_5'])) ? $_POST['install_step_2_5'] : null);
 		
 		# test connection (db1)
-		$db1 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+		$db1 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass']);
 		if($db1->dead) {
 			throw new Exception("Could not connect to database (1)");
 		}
 		
 		# test connection (db2)
 		if(isset($_SESSION['install_sql_db2'])) {
-			$db2 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+			$db2 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass']);
 			if($db2->dead) {
 				throw new Exception("Could not connect to database (2)");
 			}
@@ -75,21 +64,21 @@ if(isset($_POST['install_step_2_submit'])) {
 		<label for="input_1" class="col-sm-2 control-label">Host</label>
 		<div class="col-sm-10">
 			<input type="text" name="install_step_2_1" class="form-control" id="input_1" value="<?php echo (isset($_SESSION['install_sql_host']) ? $_SESSION['install_sql_host'] : null); ?>">
-			<p class="help-block">Set the IP address of your MSSQL server.</p>
+			<p class="help-block">Set the IP address of your MySQL server.</p>
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="input_7" class="col-sm-2 control-label">Port</label>
 		<div class="col-sm-10">
-			<input type="text" name="install_step_2_7" class="form-control" id="input_7" value="<?php echo (isset($_SESSION['install_sql_port']) ? $_SESSION['install_sql_port'] : '1433'); ?>">
-			<p class="help-block">Default: 1433.</p>
+			<input type="text" name="install_step_2_7" class="form-control" id="input_7" value="<?php echo (isset($_SESSION['install_sql_port']) ? $_SESSION['install_sql_port'] : '3306'); ?>">
+			<p class="help-block">Default: 3306.</p>
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="input_2" class="col-sm-2 control-label">Username</label>
 		<div class="col-sm-10">
 			<input type="text" name="install_step_2_2" class="form-control" id="input_2" value="<?php echo (isset($_SESSION['install_sql_user']) ? $_SESSION['install_sql_user'] : 'sa'); ?>">
-			<p class="help-block">It is recommended that you create a new MSSQL user just for the web connection (better security).</p>
+			<p class="help-block">It is recommended that you create a new MySQL user just for the web connection (better security).</p>
 		</div>
 	</div>
 	<div class="form-group">
@@ -111,67 +100,6 @@ if(isset($_POST['install_step_2_submit'])) {
 		<div class="col-sm-10">
 			<input type="text" name="install_step_2_5" class="form-control" id="input_5" value="<?php echo (isset($_SESSION['install_sql_db2']) ? $_SESSION['install_sql_db2'] : null); ?>">
 			<p class="help-block">Usually <strong>Me_MuOnline</strong>. Leave empty if you only use one database.</p>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="input_8" class="col-sm-2 control-label">PDO Driver</label>
-		<div class="col-sm-10">
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_8" id="input_8" value="1" checked="checked">
-					Dblib (Linux)
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_8" value="2">
-					SqlSrv (Windows)
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_8" value="3">
-					ODBC (Windows)
-				</label>
-			</div>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="input_9" class="col-sm-2 control-label">Password Encryption</label>
-		<div class="col-sm-10">
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_6" id="input_9" value="none" checked="checked">
-					None
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_6" value="wzmd5">
-					MD5 (WZ)
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_6" value="phpmd5">
-					MD5 (PHP)
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_6" value="sha256">
-					Sha256
-				</label>
-			</div>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="input_10" class="col-sm-2 control-label">Sha256 Salt</label>
-		<div class="col-sm-10">
-			<input type="text" name="install_step_2_9" class="form-control" id="input_10" value="<?php echo (isset($_SESSION['install_sql_sha256_salt']) ? $_SESSION['install_sql_sha256_salt'] : '1234567890'); ?>">
-			<p class="help-block">Required if you selected Sha256 password encryption. The "salt" value must match the configuration on your server.</p>
 		</div>
 	</div>
 

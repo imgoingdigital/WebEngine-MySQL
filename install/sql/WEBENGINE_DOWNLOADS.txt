@@ -1,8 +1,9 @@
-CREATE TABLE [dbo].[{TABLE_NAME}](
-	[download_id] [int] IDENTITY(1,1) NOT NULL,
-	[download_title] [varchar](100) NOT NULL,
-	[download_description] [varchar](100) NULL,
-	[download_link] [varchar](max) NOT NULL,
-	[download_size] [float] NULL,
-	[download_type] [int] NOT NULL
-) ON [PRIMARY]
+CREATE TABLE `{TABLE_NAME}`  (
+  `download_id` int(11) NOT NULL AUTO_INCREMENT,
+  `download_title` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `download_description` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `download_link` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `download_size` double NULL DEFAULT NULL,
+  `download_type` int(11) NOT NULL,
+  PRIMARY KEY (`download_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;

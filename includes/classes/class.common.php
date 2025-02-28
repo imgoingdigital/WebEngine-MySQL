@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -58,25 +58,10 @@ class common {
 		
 		$data = array(
 			'username' => $username,
-			'password' => $password
+			'password' => hash('sha256', $username.':'.$password)
 		);
 		
-		switch($this->_passwordEncryption) {
-			case 'wzmd5':
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username)";
-				break;
-			case 'phpmd5':
-				$data['password'] = md5($password);
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
-				break;
-			case 'sha256':
-				$data['password'] = $password . $username . $this->_sha256salt;
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', CAST(:password AS VARCHAR(MAX)))";
-				break;
-			default:
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
-		}
-		
+		$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
 		$result = $this->memuonline->query_fetch_single($query, $data);
 		if(is_array($result)) return true;
 		return false;
@@ -107,9 +92,7 @@ class common {
 	public function accountOnline($username) {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT "._CLMN_CONNSTAT_." FROM "._TBL_MS_." WHERE "._CLMN_USERNM_." = ? AND "._CLMN_CONNSTAT_." = ?", array($username, 1));
-		if(is_array($result)) return true;
-		return;
+		return DVT::getOnlineStatusFromUsername($username);
 	}
 
 	public function changePassword($id,$username,$new_password) {
@@ -118,37 +101,12 @@ class common {
 		if(!Validator::AlphaNumeric($username)) return;
 		if(!Validator::PasswordLength($new_password)) return;
 		
-		switch($this->_passwordEncryption) {
-			case 'wzmd5':
-				$data = array(
-					'userid' => $id,
-					'username' => $username,
-					'password' => $new_password
-				);
-				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username) WHERE "._CLMN_MEMBID_." = :userid";
-				break;
-			case 'phpmd5':
-				$data = array(
-					'userid' => $id,
-					'password' => md5($new_password)
-				);
-				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
-				break;
-			case 'sha256':
-				$data = array(
-					'userid' => $id,
-					'password' => '0x' . hash('sha256', $new_password . $username . $this->_sha256salt)
-				);
-				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = CONVERT(binary(32),:password,1) WHERE "._CLMN_MEMBID_." = :userid";
-				break;
-			default:
-				$data = array(
-					'userid' => $id,
-					'password' => $new_password
-				);
-				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
-		}
-
+		$data = array(
+			'userid' => $id,
+			'password' => hash('sha256', $username.':'.$new_password)
+		);
+		
+		$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
 		$result = $this->memuonline->query($query, $data);
 		if($result) return true;
 		return;

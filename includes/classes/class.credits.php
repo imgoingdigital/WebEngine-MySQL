@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -535,7 +535,7 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC");
+		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC LIMIT {LIMIT}");
 		$result = $this->memuonline->query_fetch($query);
 		if(is_array($result)) return $result;
 	}

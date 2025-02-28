@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -34,9 +34,7 @@ define('WEBENGINE_WRITABLE_PATHS_FILE', 'writable.paths.json');
 define('WEBENGINE_DEFAULT_CONFIGURATION_FILE', 'webengine.json.default');
 
 $install['PDO_DSN'] = array(
-	1 => 'dblib',
-	2 => 'sqlsrv',
-	3 => 'odbc',
+	1 => 'mysql',
 );
 
 $install['sql_list'] = array(
@@ -89,8 +87,5 @@ $install['cron_jobs'] = array(
 );
 
 $install['PDO_PWD_ENCRYPT'] = array(
-	'none',
-	'wzmd5',
-	'phpmd5',
 	'sha256',
 );

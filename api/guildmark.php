@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -34,11 +34,19 @@ if(isset($_GET['size'])) {
 // Binary Data
 $binaryData = (isset($_GET['data']) ? $_GET['data'] : "");
 if(strlen($binaryData) != 64) {
-	$binaryData = bin2hex($binaryData);
+	$hex = '';
+	foreach(explode(' ', $binaryData) as $number) {
+		if(!is_numeric($number)) continue;
+		$hex .= sprintf("%02X", intval($number));
+	}
+	$binaryData = str_pad($hex, 63, '0') . '1';
+} else {
+	$binaryData = strtoupper($binaryData);
+	$binaryData = substr($binaryData, 0, 63) . '1';
 }
 
 // Pixel Formula
-$pixelSize = $size/8;
+$pixelSize = round($size / 8);
 $hex = $binaryData;
 
 // Decode Colors
@@ -103,5 +111,5 @@ for($y=0; $y<$size; $y++) {
 
 header("Content-type: image/gif");
 ImageRectangle($img, 0, 0, $size-1, $size-1, ImageColorAllocate($img, 0, 0, 0));
-imagecolortransparent($img, imagecolorexact($img, 17, 17, 17));
+imagecolortransparent($img, imagecolorexact($img, 0, 0, 0));
 ImageGif($img);
