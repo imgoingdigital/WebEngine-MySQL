@@ -41,6 +41,11 @@ WebEngine CMS is possible thanks to the following open source projects.
 
 * **Lautaro Angelico** - *Developer*
 
+## Special Thanks
+
+* **loopik** - *1oopik* (discord)
+* **小神仙** - *xiaoshenxian1060* (discord)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
