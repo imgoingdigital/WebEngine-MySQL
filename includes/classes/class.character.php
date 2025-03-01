@@ -25,8 +25,6 @@ class Character {
 	
 	protected $_clearPkLevel = 3;
 	
-	protected $_skilEnhanceTreeLevel = 800;
-	
 	protected $_strength = 0;
 	protected $_agility = 0;
 	protected $_vitality = 0;
@@ -451,110 +449,7 @@ class Character {
 	}
 	
 	public function CharacterClearSkillTree() {
-		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
-		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_38'));
-		if(!$this->CharacterBelongsToAccount($this->_character, $this->_userid)) throw new Exception(lang('error_38'));
-		
-		// check online status
-		$Account = new Account();
-		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
-		
-		// character data
-		$characterData = $this->CharacterData($this->_character);
-		
-		// check required level (regular)
-		if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_120'));
-		
-		// character master level data
-		$characterMasterLvlData = _TBL_CHR_ != _TBL_MASTERLVL_ ? $this->getMasterLevelInfo($this->_character) : $characterData;
-		if(!is_array($characterMasterLvlData)) throw new Exception(lang('error_119'));
-		
-		// check required level (master)
-		if($characterMasterLvlData[_CLMN_ML_LVL_] < mconfig('required_master_level')) throw new Exception(lang('error_121'));
-		
-		// combined character level
-		$characterLevel = $characterData[_CLMN_CHR_LVL_]+$characterMasterLvlData[_CLMN_ML_LVL_];
-		
-		// skill enhancement tree points
-		$skillEnhancementPoints = 0;
-		
-		// skill enhancement support
-		if(defined('_CLMN_ML_I4SP_')) {
-			$skillEnhancementTreeEnabled = array_key_exists(_CLMN_ML_I4SP_, $characterMasterLvlData) ? true : false;
-		}
-		
-		// skill enhancement points
-		if($skillEnhancementTreeEnabled) {
-			if($characterLevel > $this->_skilEnhanceTreeLevel) {
-				$skillEnhancementPoints = $characterLevel-$this->_skilEnhanceTreeLevel;
-			}
-		}
-		
-		// zen requirement
-		$zenRequirement = mconfig('zen_cost');
-		
-		// credit requirement
-		$creditConfig = mconfig('credit_config');
-		$creditCost = mconfig('credit_cost');
-		if($creditCost > 0 && $creditConfig != 0) {
-			$creditSystem = new CreditSystem();
-			$creditSystem->setConfigId($creditConfig);
-			$configSettings = $creditSystem->showConfigs(true);
-			switch($configSettings['config_user_col_id']) {
-				case 'userid':
-					$creditSystem->setIdentifier($this->_userid);
-					break;
-				case 'username':
-					$creditSystem->setIdentifier($this->_username);
-					break;
-				case 'character':
-					$creditSystem->setIdentifier($this->_character);
-					break;
-				default:
-					throw new Exception("Invalid identifier (credit system).");
-			}
-			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_118', array($configSettings['config_title'])));
-		}
-		
-		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
-		
-		// data
-		$data = array(
-			'player' => $this->_character,
-			'masterpoints' => $characterMasterLvlData[_CLMN_ML_LVL_]-$skillEnhancementPoints,
-		);
-		
-		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) {
-			$data['skillenhancementpoints'] = $skillEnhancementPoints;
-		}
-		
-		// query
-		$query = "UPDATE "._TBL_MASTERLVL_." SET "._CLMN_ML_POINT_." = :masterpoints";
-		if(defined('_CLMN_ML_EXP_')) if(array_key_exists(_CLMN_ML_EXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_EXP_." = 0";
-		if(defined('_CLMN_ML_NEXP_')) if(array_key_exists(_CLMN_ML_NEXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_NEXP_." = 0";
-		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) $query .= ", "._CLMN_ML_I4SP_." = :skillenhancementpoints";
-		$query .= " WHERE "._CLMN_ML_NAME_." = :player";
-		
-		// clear magic list (skills)
-		$resetMagicList = $this->_resetMagicList($this->_character);
-		if(!$resetMagicList) throw new Exception(lang('error_21'));
-		
-		// clear master skill tree
-		$clearMasterSkillTree = $this->muonline->query($query, $data);
-		if(!$clearMasterSkillTree) throw new Exception(lang('error_21'));
-		
-		// deduct zen
-		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
-		
-		// subtract credits
-		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
-		
-		// success
-		message('success', lang('success_12'));
+		// WIP
 	}
 	
 	public function CharacterAddStats() {

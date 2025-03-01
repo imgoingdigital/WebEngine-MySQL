@@ -40,7 +40,7 @@ define('_TBL_CHR_', 'character_info');
 	define('_CLMN_CHR_ZEN_', 'money');
 	define('_CLMN_CHR_LVL_', 'level');
 	define('_CLMN_CHR_RSTS_', 'reset');
-	define('_CLMN_CHR_GRSTS_', 'reset');
+	define('_CLMN_CHR_GRSTS_', 'greset');
 	define('_CLMN_CHR_LVLUP_POINT_', 'points');
 	define('_CLMN_CHR_STAT_STR_', 'strength');
 	define('_CLMN_CHR_STAT_AGI_', 'agility');
@@ -56,6 +56,8 @@ define('_TBL_CHR_', 'character_info');
 	define('_CLMN_CHR_MAGIC_L_', 'MagicList');
 	define('_CLMN_CHR_INV_', 'Inventory');
 	define('_CLMN_CHR_QUEST_', 'Quest');
+	define('_CLMN_CHR_ONLINE_', 'online');
+	define('_CLMN_CHR_GUID_', 'guid');
 
 define('_TBL_MASTERLVL_', 'character_info');
 	define('_CLMN_ML_NAME_', 'name');
@@ -64,19 +66,12 @@ define('_TBL_MASTERLVL_', 'character_info');
 	define('_CLMN_ML_NEXP_', 'experience_master');
 	define('_CLMN_ML_POINT_', 'points_master');
 	define('_CLMN_ML_I4SP_', 'points_majestic');
+	define('_CLMN_ML_MJLVL_', 'level_majestic');
 	
 define('_TBL_MC_', 'account_data');
 	define('_CLMN_MC_ID_', 'account_id');
 	define('_CLMN_MC_CREDITS_', 'credits');
 	define('_CLMN_MC_USED_', 'credits');
-
-define('_TBL_MUCASTLE_DATA_', 'MuCastle_DATA');
-	define('_CLMN_MCD_GUILD_OWNER_', 'OWNER_GUILD');
-	define('_CLMN_MCD_MONEY_', 'MONEY');
-	define('_CLMN_MCD_TRC_', 'TAX_RATE_CHAOS');
-	define('_CLMN_MCD_TRS_', 'TAX_RATE_STORE');
-	define('_CLMN_MCD_THZ_', 'TAX_HUNT_ZONE');
-	define('_CLMN_MCD_OCCUPY_', 'CASTLE_OCCUPY');
 	
 define('_TBL_GUILD_', 'guild_list');
 	define('_CLMN_GUILD_NAME_', 'name');
@@ -86,33 +81,17 @@ define('_TBL_GUILD_', 'guild_list');
 	define('_CLMN_GUILD_NOTICE_', 'notice');
 	define('_CLMN_GUILD_UNION_', 'alliance');
 	
-define('_TBL_GUILDMEMB_', 'GuildMember');
+define('_TBL_GUILDMEMB_', 'guild_members');
 	define('_CLMN_GUILDMEMB_CHAR_', 'Name');
 	define('_CLMN_GUILDMEMB_NAME_', 'G_Name');
 	define('_CLMN_GUILDMEMB_LEVEL_', 'G_Level');
 	define('_CLMN_GUILDMEMB_STATUS_', 'G_Status');
 	
-define('_TBL_MUCASTLE_RS_', 'MuCastle_REG_SIEGE');
-	define('_CLMN_MCRS_GUILD_', 'REG_SIEGE_GUILD');
-	define('_CLMN_MCRS_SEQNUM_', 'SEQ_NUM');
-	
-define('_TBL_MUCASTLE_SGL_', 'MuCastle_SIEGE_GUILDLIST');
-	define('_CLMN_MCSGL_MAPSRVGRP_', 'MAP_SVR_GROUP');
-	define('_CLMN_MCSGL_GNAME_', 'GUILD_NAME');
-	define('_CLMN_MCSGL_GID_', 'GUILD_ID');
-	define('_CLMN_MCSGL_GINV_', 'GUILD_INVOLVED');
-	define('_CLMN_MCSGL_GSCORE_', 'GUILD_SCORE');
-	
-define('_TBL_GENS_', 'IGC_Gens');
-	define('_CLMN_GENS_NAME_', 'Name');
-	define('_CLMN_GENS_TYPE_', 'Influence');
-	define('_CLMN_GENS_RANK_', 'Class');
-	define('_CLMN_GENS_POINT_', 'Points');
-	
-define('_TBL_VIP_', 'T_VIPList');
-	define('_CLMN_VIP_ID_', 'AccountID');
-	define('_CLMN_VIP_DATE_', 'Date');
-	define('_CLMN_VIP_TYPE_', 'Type');
+define('_TBL_GENS_', 'character_gens');
+	define('_CLMN_GENS_ID_', 'char_id');
+	define('_CLMN_GENS_TYPE_', 'family');
+	define('_CLMN_GENS_RANK_', 'level');
+	define('_CLMN_GENS_POINT_', 'contribution');
 
 define('_TBL_CH_', 'accounts_security');
 	define('_CLMN_CH_ID_', 'account_id');
@@ -140,26 +119,26 @@ $custom['character_class'] = array(
 	39 => array('Noble Elf', 'NE', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0), 'class_group' => 32),
 	47 => array('Royal Elf', 'RYE', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0), 'class_group' => 32),
 	48 => array('Magic Gladiator', 'MG', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
-	50 => array('Duel Master', 'DM', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
-	54 => array('Magic Knight', 'MK', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
-	62 => array('Duple Knight', 'DPK', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
+	51 => array('Duel Master', 'DM', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
+	55 => array('Magic Knight', 'MK', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
+	63 => array('Duple Knight', 'DPK', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0), 'class_group' => 48),
 	64 => array('Dark Lord', 'DL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
-	66 => array('Lord Emperor', 'LE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
-	70 => array('Empire Lord', 'EL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
-	78 => array('Force Emperor', 'FCE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
+	67 => array('Lord Emperor', 'LE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
+	71 => array('Empire Lord', 'EL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
+	79 => array('Force Emperor', 'FCE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25), 'class_group' => 64),
 	80 => array('Summoner', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0), 'class_group' => 80),
 	81 => array('Bloody Summoner', 'BS', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0), 'class_group' => 80),
 	83 => array('Dimension Master', 'DSM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0), 'class_group' => 80),
 	87 => array('Dimension Summoner', 'DS', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0), 'class_group' => 80),
 	95 => array('Endless Summoner', 'ESUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0), 'class_group' => 80),
 	96 => array('Rage Fighter', 'RF', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
-	98 => array('Fist Master', 'FM', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
-	102 => array('Fist Blazer', 'FB', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
-	110 => array('Bloody Fighter', 'BF', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
+	99 => array('Fist Master', 'FM', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
+	103 => array('Fist Blazer', 'FB', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
+	111 => array('Bloody Fighter', 'BF', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0), 'class_group' => 96),
 	112 => array('Grow Lancer', 'GL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
-	114 => array('Mirage Lancer', 'ML', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
-	118 => array('Shining Lancer', 'SL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
-	126 => array('Arcane Lancer', 'AL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
+	116 => array('Mirage Lancer', 'ML', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
+	119 => array('Shining Lancer', 'SL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
+	127 => array('Arcane Lancer', 'AL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0), 'class_group' => 112),
 	128 => array('Rune Mage', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0), 'class_group' => 128),
 	129 => array('Rune Spell Master', 'RSM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0), 'class_group' => 128),
 	131 => array('Grand Rune Master', 'GRM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0), 'class_group' => 128),
@@ -222,7 +201,7 @@ $custom['rankings_classgroup_filter'] = array(
  * custom: character_cmd
  * classes who use cmd stat
  */
-$custom['character_cmd'] = array(64, 66, 70, 78);
+$custom['character_cmd'] = array(64, 67, 71, 79);
 
 /*
  * custom: gens_ranks
@@ -322,6 +301,14 @@ $custom['map_list'] = array(
 	80 => 'Karutan 1',
 	81 => 'Karutan 2',
 	82 => 'Doppelganger',
+	83 => 'Doppelganger',
+	84 => 'Doppelganger',
+	85 => 'Doppelganger',
+	86 => 'Doppelganger',
+	87 => 'Doppelganger',
+	88 => 'Doppelganger',
+	89 => 'Doppelganger',
+	90 => 'Doppelganger',
 	91 => 'Acheron',
 	92 => 'Acheron',
 	95 => 'Debenter',

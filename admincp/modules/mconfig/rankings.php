@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.6-dvteam
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
@@ -201,7 +201,7 @@ $moduleConfig = simplexml_load_file($xmlPath);
 			</td>
 		</tr>
 		<tr>
-			<th>Exclude Guilds<br /><span>Add the names of the guilds (separated by commas) that you want to exclude from showing up in the guilds rankings.</span></th>
+			<th>Exclude Guilds<br /><span>Add the IDs of the guilds (separated by commas) that you want to exclude from showing up in the guilds rankings.</span></th>
 			<td>
 				<input class="form-control" type="text" name="setting_23" value="<?php echo $moduleConfig->rankings_excluded_guilds; ?>"/>
 			</td>

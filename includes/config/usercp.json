@@ -62,16 +62,6 @@
     {
         "active": true,
         "type": "internal",
-        "phrase": "usercp_menu_txt_9",
-        "link": "usercp\/clearskilltree",
-        "icon": "clearst.png",
-        "visibility": "user",
-        "newtab": false,
-        "order": 70
-    },
-    {
-        "active": true,
-        "type": "internal",
         "phrase": "usercp_menu_txt_4",
         "link": "usercp\/vote",
         "icon": "vote.png",

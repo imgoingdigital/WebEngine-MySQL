@@ -1,9 +1,9 @@
 CREATE TABLE `{TABLE_NAME}`  (
-  `registration_account` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `registration_password` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `registration_email` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `registration_date` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `registration_ip` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `registration_key` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `registration_account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `registration_password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `registration_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `registration_date` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `registration_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `registration_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`registration_account`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_520_ci ROW_FORMAT = Dynamic;

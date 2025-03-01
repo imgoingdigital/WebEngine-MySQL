@@ -1,13 +1,13 @@
 CREATE TABLE `{TABLE_NAME}`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `author` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `version` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `compatibility` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `folder` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `files` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `compatibility` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `folder` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `status` int(11) NOT NULL,
-  `install_date` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `installed_by` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `install_date` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `installed_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_520_ci ROW_FORMAT = Dynamic;

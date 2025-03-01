@@ -1,6 +1,6 @@
 CREATE TABLE `{TABLE_NAME}`  (
   `news_id` int(11) NOT NULL,
-  `news_language` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `news_title` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `news_content` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  `news_language` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `news_title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `news_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_520_ci ROW_FORMAT = Dynamic;

@@ -105,7 +105,6 @@ if(!@include_once(__PATH_CLASSES__ . 'class.credits.php')) throw new Exception('
 if(!@include_once(__PATH_CLASSES__ . 'class.email.php')) throw new Exception('Could not load class (email).');
 if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('Could not load class (account).');
 if(!@include_once(__PATH_CLASSES__ . 'class.connection.php')) throw new Exception('Could not load class (connection).');
-if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Exception('Could not load class (castlesiege).');
 if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
 if(!@include_once(__PATH_CLASSES__ . 'class.cache.php')) throw new Exception('Could not load class (cache).');
 if(!@include_once(__PATH_CLASSES__ . 'paypal/PaypalIPN.php')) throw new Exception('Could not load class (PayalIPN).');

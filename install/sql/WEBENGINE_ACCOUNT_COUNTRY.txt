@@ -1,6 +1,6 @@
 CREATE TABLE `{TABLE_NAME}`  (
-  `account` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `country` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `account` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `country` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `lastchange` datetime(3) NULL DEFAULT NULL,
   PRIMARY KEY (`account`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_520_ci ROW_FORMAT = Dynamic;

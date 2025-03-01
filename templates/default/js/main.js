@@ -2,9 +2,6 @@ $(function() {
 	// Initiate Server Time
 	serverTime.init("tServerTime", "tLocalTime", "tServerDate", "tLocalDate");
 	
-	// Initiate Castle Siege Countdown
-	csTime.init();
-	
 	// Initiate bootstrap tooltips
 	$('[data-toggle="tooltip"]').tooltip();
 	
@@ -36,73 +33,6 @@ $(function() {
 		}
 	}
 });
-
-var csTime = {
-	csDays: null,
-	csHours: null,
-	csMinutes: null,
-	csSeconds: null,
-	csTimeLeft: null,
-	csNextStageTimeLeft: null,
-	battleMode: false,
-	days_module: null,
-	hours_module: null,
-	minutes_module: null,
-	init: function() {
-		var a = this;
-		$.getJSON(baseUrl + "api/castlesiege.php", function(c) {
-			a.csTimeLeft = c.TimeLeft;
-			a.csNextStageTimeLeft = c.NextStageTimeLeft;
-			setInterval(function() {
-				a.update();
-			}, 1000)
-		})
-	},
-	update: function() {
-		var b = this;
-		b.csTimeLeft = b.csTimeLeft-1;
-		b.csNextStageTimeLeft = b.csNextStageTimeLeft-1;
-		
-		if(b.csTimeLeft >= 1) {
-			b.days_module = b.csTimeLeft % 86400;
-			b.csDays = (b.csTimeLeft-b.days_module)/86400;
-			b.hours_module = b.days_module % 3600;
-			b.csHours = (b.days_module-b.hours_module)/3600;
-			b.minutes_module = b.hours_module % 60;
-			b.csMinutes = (b.hours_module-b.minutes_module)/60;
-			b.csSeconds = b.minutes_module;
-		} else {
-			b.battleMode = true;
-			b.csDays = 0;
-			b.csHours = 0;
-			b.csMinutes = 0;
-			b.csSeconds = 0;
-		}
-		
-		if(b.battleMode == true) {
-			if($('#cscountdown').length) {
-				document.getElementById("cscountdown").innerHTML = 'Battle';
-			}
-			if($('#siegeTimer').length) {
-				document.getElementById("siegeTimer").innerHTML = 'Battle';
-			}
-		} else {
-			
-			var countdown = '';
-			if(b.csTimeLeft > 86400) countdown += b.csDays + "<span>d</span> ";
-			if(b.csTimeLeft > 3600) countdown += b.csHours + "<span>h</span> ";
-			if(b.csTimeLeft > 60) countdown += b.csMinutes + "<span>m</span> ";
-			countdown += b.csSeconds + "<span>s</span>";
-			
-			if($('#cscountdown').length) {
-				document.getElementById("cscountdown").innerHTML = countdown;
-			}
-			if($('#siegeTimer').length) {
-				document.getElementById("siegeTimer").innerHTML = countdown;
-			}
-		}
-	}
-};
 
 var serverTime = {
 	weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

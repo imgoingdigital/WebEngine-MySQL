@@ -1,8 +1,8 @@
 CREATE TABLE `{TABLE_NAME}`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `user_ip` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `user_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `vote_site_id` int(11) NOT NULL,
-  `timestamp` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `timestamp` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_520_ci ROW_FORMAT = Dynamic;

@@ -111,7 +111,6 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _setCharacter($input) {
-		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_71'));
 		$this->_identifier = $input;
 	}
 	
