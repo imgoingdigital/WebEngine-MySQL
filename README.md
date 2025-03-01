@@ -2,6 +2,8 @@
 
 WebEngine is an Open source Content Management System (CMS) for Mu Online servers. Our main goal is to provide a fast, secure and high quality framework for server owners to create and implement their own features to their websites.
 
+This version of WebEngine CMS has been adapted and tested to work with DV-Team's Season 18, 19 and 20 server files.
+
 ## Getting Started
 
 These instructions will help you deploy your own website using WebEngine CMS.
@@ -23,7 +25,7 @@ Here's what you'll need to run WebEngine CMS in your web server
 
 ## Other Software
 
-WebEngineCMS is possible thanks to the following open source projects.
+WebEngine CMS is possible thanks to the following open source projects.
 
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer/)
 * [Bootstrap](https://getbootstrap.com/)
