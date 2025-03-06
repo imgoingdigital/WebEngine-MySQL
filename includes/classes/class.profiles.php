@@ -193,12 +193,6 @@ class weProfiles {
 			$guild = $guildName;
 		}
 		
-		// online status
-		$status = 0;
-		if($this->common->accountOnline($playerData[_CLMN_CHR_ACCID_])) {
-			$status = 1;
-		}
-		
 		// Cache
 		$data = array(
 			time(),
@@ -214,7 +208,7 @@ class weProfiles {
 			$playerData[_CLMN_CHR_PK_KILLS_],
 			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
 			$guild,
-			$status,
+			0,
 			check_value($playerMasterLevel) ? $playerMasterLevel : 0,
 		);
 		
